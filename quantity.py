@@ -1,4 +1,5 @@
 from openpyxl import load_workbook
+from datetime import datetime
 
 
 tride = load_workbook(filename='tride.xlsx')
@@ -10,13 +11,8 @@ ozon_sheets = ozon.sheetnames
 
 tride_sheet = tride[tride_sheets[0]]
 ozon_sheet = ozon[ozon_sheets[1]]
+count = 0
 
-
-def typeObject(word):
-    if word is None:
-        return word
-    else:
-        return word.replace(' ', '')
 
 
 # приводим все занчения из столбца количество к 0 в остатках озона
@@ -28,8 +24,9 @@ def valueToZero():
             ozon_sheet.cell(row=i, column=5).value = 0
 
 
-# соотносим артикли в прайсе поставщика остатками озона
+# соотносим артикли в прайсе поставщика с остатками озона
 def articles():
+    global count
     count = 0
     for i in range(1, ozon_sheet.max_row):
         x = typeObject(ozon_sheet.cell(row=i, column=3).value)
@@ -45,7 +42,16 @@ def articles():
 
  # проверка остатков
 def quantity():
-    count = 0
+    global count
+
+    # проверка на пустые строки
+    def typeObject(word):
+        if word is None:
+            return word
+        else:
+            return word.replace(' ', '')
+        
+    
     for i in range(1, ozon_sheet.max_row):
         x = typeObject(ozon_sheet.cell(row=i, column=2).value)
 
@@ -67,7 +73,7 @@ def quantity():
                         ozon_sheet.cell(row=i, column=5).value = int(tride_sheet.cell(row=j, column=4).value)
 
 
-valueToZero()
+quantity()
 
 print(count, "совпадений")
-ozon.save('ozon.xlsx')
+ozon.save('ozon({}-{}).xlsx'.format(datetime.now().day, datetime.now().month))
