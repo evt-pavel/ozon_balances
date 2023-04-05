@@ -1,0 +1,5 @@
+.env
+.venvQuantity
+.__pycache__/quantity.cpython-310.pyc
+.__pycache__/send_email.cpython-310.pyc
+.__pycache__/setting.cpython-310.pyc
