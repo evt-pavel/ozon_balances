@@ -47,7 +47,6 @@ def articles():
 
  # проверка остатков
 def quantity():
-    global count
     count = 0
     
     for i in range(1, ozon_sheet.max_row):
@@ -71,5 +70,5 @@ def quantity():
                         ozon_sheet.cell(row=i, column=5).value = int(tride_sheet.cell(row=j, column=4).value)
 
     ozon_sheet.delete_cols(2)
-    print('Обновлено {count} товаров!')
+    print(f'Обновлено {count} товаров!')
     ozon.save(f'ozon_{date.today().strftime("%d-%b-%Y")}.xlsx')
