@@ -8,7 +8,7 @@ import os
 
 
 
-def send_email(filename):
+def send_email(filename, old_quant):
 
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.starttls()
@@ -29,6 +29,7 @@ def send_email(filename):
 
         server.sendmail(sender, recipient, msg.as_string())
         os.remove(filename)
+        os.remove(old_quant)
         return 'The message was sand successfully'
 
     except Exception as ex:
